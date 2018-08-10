@@ -1,2 +1,4 @@
 examples/
 old/
+*.dia~
+*.dia.autosave
