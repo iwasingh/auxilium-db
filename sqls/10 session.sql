@@ -1,0 +1,3 @@
+CREATE TABLE session (
+  id INTEGER PRIMARY KEY
+);
