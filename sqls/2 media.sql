@@ -1,5 +1,5 @@
 CREATE TABLE media (
-  id INTEGER PRIMARY KEY AUTO INCREMENT,
+  id SERIAL PRIMARY KEY,
   source VARCHAR(30),
   typology_type VARCHAR(6),
   

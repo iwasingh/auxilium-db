@@ -7,7 +7,6 @@ CREATE TABLE message (
   FOREIGN KEY (resource_id) REFERENCES resource(id)
     ON UPDATE CASCADE
     ON DELETE CASCADE,
-    
   FOREIGN KEY (employee_cf) REFERENCES employee(cf)
     ON UPDATE CASCADE
     ON DELETE CASCADE, --GDPR Compliant

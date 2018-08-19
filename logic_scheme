@@ -3,7 +3,7 @@ MEDIA (ID, Contenuto, C-Tipo)
 FK: C-Tipo REFERENCES Tipologia
 RISORSA (Codice, Titolo, Padre)
 FK: Padre REFERENCES Risorsa
-ALLEGA (C-Risorsa, C-Media)
+ALLEGATO (C-Risorsa, C-Media)
 FK: C-Risorsa REFERENCES Risorsa
 FK: C-Media REFERENCES Media
 
@@ -29,7 +29,6 @@ FK: CF REFERENCES Turno
 FK: C-Codice REFERENCES Turno
 FK: C-Turno REFERENCES Turno
 AK: C-Turno
-
 CENTRALINISTA (Data, CF, C-Codice, C-Turno)
 FK: Data REFERENCES Turno
 FK: CF REFERENCES Turno
