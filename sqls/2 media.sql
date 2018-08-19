@@ -4,6 +4,6 @@ CREATE TABLE media (
   typology_type VARCHAR(6),
   
   FOREIGN KEY(typology_type) REFERENCES typology(type)
-    ON DELETE SET NULL 
     ON UPDATE CASCADE
+    ON DELETE SET NULL
 );
