@@ -1,0 +1,5 @@
+CREATE TABLE dispatcher(
+  shift_id INTEGER PRIMARY KEY,
+  FOREIGN KEY (shift_id) REFERENCES shift(id)
+    ON DELETE CASCADE ON UPDATE CASCADE
+);
