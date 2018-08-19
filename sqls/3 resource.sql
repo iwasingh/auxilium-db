@@ -1,5 +1,5 @@
 CREATE TABLE resource (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTO INCREMENT,
     title VARCHAR(30) NOT NULL, 
     parent INTEGER,
 
