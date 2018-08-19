@@ -1,5 +1,3 @@
->>>> MANCA TURNO
-
 TIPOLOGIA (TIPO)
 MEDIA (ID, Contenuto, C-Tipo)
 FK: C-Tipo REFERENCES Tipologia
@@ -19,6 +17,25 @@ FK: CF REFERENCES Dipendente
 MESSAGGIO (CF, Timestamp, Testo, C-Risorsa)
 FK: CF REFERENCES Dipendente
 FK: C-Risorsa REFERENCES Risorsa
+
+SESSIONE (Codice)
+TURNO (Data, CF, C-Codice, Inizio, Fine, C-Turno)
+FK: C-Codice REFERENCES Sessione
+FK: CF REFERENCES Dipendente
+AK: C-Turno
+MANUTENTORE (Data, CF, C-Codice, C-Turno)
+FK: Data REFERENCES Turno
+FK: CF REFERENCES Turno
+FK: C-Codice REFERENCES Turno
+FK: C-Turno REFERENCES Turno
+AK: C-Turno
+
+CENTRALINISTA (Data, CF, C-Codice, C-Turno)
+FK: Data REFERENCES Turno
+FK: CF REFERENCES Turno
+FK: C-Codice REFERENCES Turno
+FK: C-Turno REFERENCES Turno
+AK: C-Turno
 
 CONDIZIONE (Nome)
 DISPOSITIVO (Nome, Caratteristiche)
