@@ -1,3 +1,3 @@
 CREATE TABLE typology (
-    type VARCHAR(6) PRIMARY KEY
+  type VARCHAR(6) PRIMARY KEY
 );

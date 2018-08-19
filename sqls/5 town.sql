@@ -1,4 +1,6 @@
 CREATE TABLE town (
-    cap INTEGER(5) PRIMARY KEY,
-    name VARCHAR(36)
+  cap CHAR(5) PRIMARY KEY,
+  name VARCHAR(36),
+
+  CHECK (cap SIMILAR TO '[0-9]{5}')
 );
