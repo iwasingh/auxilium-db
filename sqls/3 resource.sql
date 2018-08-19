@@ -5,5 +5,5 @@ CREATE TABLE resource (
 
     FOREIGN KEY(parent) REFERENCES resource(id)
         ON UPDATE CASCADE
-        ON DELETE NO ACTION
+        ON DELETE SET NULL
 );
