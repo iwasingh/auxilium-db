@@ -1,9 +1,9 @@
 CREATE TABLE media (
   id SERIAL PRIMARY KEY,
-  source VARCHAR(30),
-  typology_type VARCHAR(6),
+  source VARCHAR(30) NOT NULL,
+  typology_type VARCHAR(6) NOT NULL,
   
   FOREIGN KEY(typology_type) REFERENCES typology(type)
     ON UPDATE CASCADE
-    ON DELETE SET NULL
+    ON DELETE NO ACTION
 );

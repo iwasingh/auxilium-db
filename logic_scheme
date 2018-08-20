@@ -38,7 +38,8 @@ AK: C-Turno
 
 CONDIZIONE (Nome)
 DISPOSITIVO (Nome, Caratteristiche)
-MANSIONE (Nome, Descrizione)
+MANSIONE (Nome, Descrizione, C-Risorsa)
+FK: C-Risorsa REFERENCES Risorsa
 GRUPPO (Titolo, Danno, Rischio)
 COND_PER_GRUPPO (C-Condizione, C-Titolo)
 FK: C-Condizione Condizione
@@ -57,21 +58,16 @@ FK: C-Nome REFERENCES Mansione
 
 INVENTARIO (nr, C-Nome, Descrizione)
 FK: C-Nome REFERENCES Dispositivo
-AK: Identificativo
-PRESTITO (DataInizio, OraInizio, C-Turno, C-NR, C-Nome, DataReso, OraReso, Motivazione, Identificativo)
+
+PRESTITO (DataInizio, OraInizio, C-Turno, C-NR, C-Nome, DataReso, OraReso, Motivazione)
 FK: C-Turno REFERENCES Manutentore
 FK: C-NR REFERENCES Inventario
 FK: C-Nome REFERENCES Inventario
-AK: Identificativo
 
-DESCRIVE (C-Codice, C-Nome)
-FK: C-Nome REFERENCES Mansione
-FK: C-Codice REFERENCES Risorsa
-AK: C-Nome
-
-ASSISTENZA (C-Turno-Man, C-Turno-Cen, ticket, DataFine, OraFine, OraInizio, DataInizio)
+ASSISTENZA (C-Turno-Man, ticket, DataFine, OraFine, OraInizio, DataInizio)
 FK: C-Turno-Man REFERENCES Manutentore
+
+PARTECIPANTE(C-Assistenza, C-Turno-Cen)
 FK: C-Turno-Cen REFERENCES Centralinista
-
-
+FK: C-Assistenza REFERENCES Assistenza
 
