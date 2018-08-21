@@ -1,10 +1,10 @@
--- for i in `seq 1 25`; do cat "$i "*; done > db.sql
+ 
 CREATE TABLE typology (
   type VARCHAR(6) PRIMARY KEY
 );
 CREATE TABLE media (
   id SERIAL PRIMARY KEY,
-  source VARCHAR(30) NOT NULL,
+  source VARCHAR(255) NOT NULL,
   typology_type VARCHAR(6) NOT NULL,
   
   FOREIGN KEY(typology_type) REFERENCES typology(type)

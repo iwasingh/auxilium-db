@@ -1,0 +1,3 @@
+CREATE TABLE condition (
+  name VARCHAR(20) PRIMARY KEY
+);
