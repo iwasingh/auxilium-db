@@ -13,7 +13,7 @@ CREATE TABLE media (
 );
 CREATE TABLE resource (
   id SERIAL PRIMARY KEY,
-  title VARCHAR(30) NOT NULL, 
+  title VARCHAR(255) NOT NULL, 
   parent INTEGER,
 
   FOREIGN KEY(parent) REFERENCES resource(id)
@@ -71,7 +71,7 @@ CREATE TABLE contact (
     ON DELETE CASCADE
 );
 CREATE TABLE message (
-  timestamp TIMESTAMP DEFAULT current_timestamp,
+  timestamp TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT current_timestamp,
   text TEXT,
   resource_id INTEGER,
   employee_cf CHAR(16),
@@ -125,10 +125,10 @@ CREATE TABLE dispatcher (
     ON DELETE CASCADE
 );
 CREATE TABLE condition (
-  name VARCHAR(20) PRIMARY KEY
+  name VARCHAR(255) PRIMARY KEY
 );
 CREATE TABLE device (
-  name VARCHAR(20) PRIMARY KEY,
+  name VARCHAR(255) PRIMARY KEY,
   specs TEXT
 );
 CREATE TABLE task (
@@ -150,7 +150,7 @@ CREATE TABLE groupn (
   CHECK (risk >= 1 AND risk <= 3)
 );
 CREATE TABLE condition_groupn (
-  condition_name VARCHAR(20) NOT NULL,
+  condition_name VARCHAR(255) NOT NULL,
   groupn_title CHAR(4) NOT NULL,  
   
   FOREIGN KEY(condition_name) REFERENCES condition(name)
@@ -161,7 +161,7 @@ CREATE TABLE condition_groupn (
     ON DELETE CASCADE
 );
 CREATE TABLE device_groupn (
-  device_name VARCHAR(20) NOT NULL,
+  device_name VARCHAR(255) NOT NULL,
   groupn_title CHAR(4) NOT NULL,  
   
   FOREIGN KEY(device_name) REFERENCES device(name)
@@ -207,7 +207,7 @@ CREATE TABLE intervention (
 );
 CREATE TABLE inventory (
   nr SERIAL, -- NOT NULL
-  device_name VARCHAR(20) NOT NULL, 
+  device_name VARCHAR(255) NOT NULL, 
   description TEXT,
 
   FOREIGN KEY(device_name) REFERENCES device(name)
@@ -218,7 +218,7 @@ CREATE TABLE inventory (
 );
 CREATE TABLE borrow (
   inventory_nr INTEGER NOT NULL,
-  inventory_device_name VARCHAR(20) NOT NULL, 
+  inventory_device_name VARCHAR(255) NOT NULL, 
   maintainer_shift_id INTEGER,
   motivation TEXT,
   start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,

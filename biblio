@@ -4,4 +4,12 @@ https://en.wikipedia.org/wiki/Multitier_architecture
 https://www.marklogic.com/blog/relational-databases-scale/
 https://stackoverflow.com/questions/43922915/business-logic-in-stored-procedures-vs-middle-layer
 http://www.cs.toronto.edu/~mashiyat/csc309/Lectures/Web%20App%20Architectures.pdf
-
+https://www.postgresql.org/docs/9.2/static/plpgsql-trigger.html
+https://www.postgresql.org/docs/9.1/static/sql-createfunction.html
+https://www.postgresql.org/docs/9.1/static/xfunc.html
+https://www.gnu.org/software/make/manual/html_node/Quick-Reference.html
+https://stackoverflow.com/questions/9657048/constraints-and-assertions-in-postgresql
+http://dolly.fim.unimore.it/2017/ Sezione Basi di Dati
+https://www.postgresql.org/docs/9.1/static/plpgsql.html
+https://www.postgresql.org/docs/current/static/plpgsql-statements.html#PLPGSQL-STATEMENTS-SQL-ONEROW
+http://www.postgresqltutorial.com/postgresql-recursive-query/
