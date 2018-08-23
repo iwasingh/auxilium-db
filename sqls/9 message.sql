@@ -1,5 +1,5 @@
 CREATE TABLE message (
-  timestamp TIMESTAMP DEFAULT current_timestamp,
+  timestamp TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT current_timestamp,
   text TEXT,
   resource_id INTEGER,
   employee_cf CHAR(16),

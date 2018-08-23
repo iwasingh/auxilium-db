@@ -1,7 +1,7 @@
-CREATE TABLE maintainer (
-  shift_id INTEGER PRIMARY KEY,
-
-  FOREIGN KEY (shift_id) REFERENCES shift(id)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
-);
+-- trigger no duplicate shift mantainer, dispatcher
+INSERT INTO maintainer(shift_id) VALUES (1);
+INSERT INTO maintainer(shift_id) VALUES (2);
+INSERT INTO maintainer(shift_id) VALUES (4);
+INSERT INTO maintainer(shift_id) VALUES (6);
+INSERT INTO maintainer(shift_id) VALUES (7);
+INSERT INTO maintainer(shift_id) VALUES (9);

@@ -1,6 +1,6 @@
 CREATE TABLE resource (
   id SERIAL PRIMARY KEY,
-  title VARCHAR(30) NOT NULL, 
+  title VARCHAR(255) NOT NULL, 
   parent INTEGER,
 
   FOREIGN KEY(parent) REFERENCES resource(id)

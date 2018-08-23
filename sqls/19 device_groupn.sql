@@ -1,5 +1,5 @@
 CREATE TABLE device_groupn (
-  device_name VARCHAR(20) NOT NULL,
+  device_name VARCHAR(255) NOT NULL,
   groupn_title CHAR(4) NOT NULL,  
   
   FOREIGN KEY(device_name) REFERENCES device(name)

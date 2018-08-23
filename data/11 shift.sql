@@ -1,22 +1,15 @@
-CREATE TABLE shift (
-  id SERIAL PRIMARY KEY,
-  shift_date DATE NOT NULL, -- DD/MM/YYYY?
-  employee_cf CHAR(16) NOT NULL,
-  session_id INTEGER NOT NULL,
-  hour_start SMALLINT NOT NULL,
-  hour_end SMALLINT NOT NULL,
+-- 2018-08-19
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-19', 'ASDASDASD234325Z', 1002, 11, 17);
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-19', 'S32GMT1235SFGTRF', 1003, 15, 20);
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-19', 'SN23MT12353EGTRF', 1004, 19, 23);
 
-  FOREIGN KEY(employee_cf) REFERENCES employee(cf)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
-  FOREIGN KEY(session_id) REFERENCES session(id)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
+-- 2018-08-21
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-21', 'SNGMT1235SFGTRFS', 1000, 09, 18);
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-21', 'S32GMT1235SFGTRF', 1001, 13, 20);
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-21', 'SN23MT12353EGTRF', 1002, 06, 14);
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-21', 'SRGSDFGC123SFLR5', 1003, 15, 21);
 
-  UNIQUE(shift_date, employee_cf),
-  UNIQUE(shift_date, session_id),
-
-  CHECK(hour_start >= 0 AND hour_start < 24),
-  CHECK(hour_end >= 0 AND hour_end < 24)
-  --, CHECK(hour_start != hour_end)
-);
+-- 2018-08-22
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-22', 'ASDASDASD234325Z', 1000, 09, 18);
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-22', 'SRGSDFGC123SFLR5', 1001, 04, 11);
+INSERT INTO shift(shift_date, employee_cf, session_id, hour_start, hour_end) VALUES ('2018-08-22', 'FRCNPNGSWEWE23SS', 1002, 06, 11);

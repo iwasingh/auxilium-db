@@ -1,5 +1,5 @@
 CREATE TABLE condition_groupn (
-  condition_name VARCHAR(20) NOT NULL,
+  condition_name VARCHAR(255) NOT NULL,
   groupn_title CHAR(4) NOT NULL,  
   
   FOREIGN KEY(condition_name) REFERENCES condition(name)
