@@ -1,3 +1,269 @@
+ 
+CREATE TABLE typology (
+  type VARCHAR(6) PRIMARY KEY
+);
+CREATE TABLE media (
+  id SERIAL PRIMARY KEY,
+  source VARCHAR(255) NOT NULL,
+  typology_type VARCHAR(6) NOT NULL,
+  
+  FOREIGN KEY(typology_type) REFERENCES typology(type)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION
+);
+CREATE TABLE resource (
+  id SERIAL PRIMARY KEY,
+  title VARCHAR(255) NOT NULL, 
+  parent INTEGER,
+
+  FOREIGN KEY(parent) REFERENCES resource(id)
+    ON UPDATE CASCADE
+    ON DELETE SET NULL
+);
+-- Composite PK means default not null?
+CREATE TABLE attachment (
+  resource_id INTEGER NOT NULL,
+  media_id INTEGER NOT NULL,
+
+  FOREIGN KEY(resource_id) REFERENCES resource(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(media_id) REFERENCES media(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+
+  PRIMARY KEY(resource_id, media_id)
+);
+CREATE TABLE town (
+  cap CHAR(5) PRIMARY KEY,
+  name VARCHAR(36),
+
+  CHECK (cap SIMILAR TO '[0-9]{5}')
+);
+-- Foreign key means default not null?
+CREATE TABLE office (
+  id SERIAL PRIMARY KEY,
+  address VARCHAR(40) NOT NULL,
+  mail VARCHAR(30) NOT NULL,
+  phone VARCHAR(15) NOT NULL,
+  town_cap CHAR(6) NOT NULL,
+
+  FOREIGN KEY(town_cap) REFERENCES town(cap)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION
+);
+CREATE TABLE employee (
+  cf CHAR(16) PRIMARY KEY,
+  name VARCHAR(30),
+  surname VARCHAR(30),
+  office_id INTEGER,
+
+  FOREIGN KEY (office_id) REFERENCES office(id)
+    ON UPDATE CASCADE
+    ON DELETE SET NULL 
+);
+CREATE TABLE contact (
+  number VARCHAR(15) PRIMARY KEY,
+  employee_cf CHAR(16) NOT NULL,
+
+  FOREIGN KEY(employee_cf) REFERENCES employee(cf)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+CREATE TABLE message (
+  timestamp TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT current_timestamp,
+  text TEXT,
+  resource_id INTEGER,
+  employee_cf CHAR(16),
+
+  FOREIGN KEY (resource_id) REFERENCES resource(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY (employee_cf) REFERENCES employee(cf)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE, --GDPR Compliant
+
+  PRIMARY KEY(employee_cf, timestamp)
+);
+CREATE TABLE session (
+  id INTEGER PRIMARY KEY
+);
+CREATE TABLE shift (
+  id SERIAL PRIMARY KEY,
+  shift_date DATE NOT NULL, -- DD/MM/YYYY?
+  employee_cf CHAR(16) NOT NULL,
+  session_id INTEGER NOT NULL,
+  hour_start SMALLINT NOT NULL,
+  hour_end SMALLINT NOT NULL,
+
+  FOREIGN KEY(employee_cf) REFERENCES employee(cf)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(session_id) REFERENCES session(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+
+  UNIQUE(shift_date, employee_cf),
+  UNIQUE(shift_date, session_id),
+
+  CHECK(hour_start >= 0 AND hour_start < 24),
+  CHECK(hour_end >= 0 AND hour_end < 24)
+  --, CHECK(hour_start != hour_end)
+);
+CREATE TABLE maintainer (
+  shift_id INTEGER PRIMARY KEY,
+
+  FOREIGN KEY (shift_id) REFERENCES shift(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+CREATE TABLE dispatcher (
+  shift_id INTEGER PRIMARY KEY,
+
+  FOREIGN KEY (shift_id) REFERENCES shift(id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+CREATE TABLE condition (
+  name VARCHAR(255) PRIMARY KEY
+);
+CREATE TABLE device (
+  name VARCHAR(255) PRIMARY KEY,
+  specs TEXT
+);
+CREATE TABLE task (
+  name VARCHAR(20) PRIMARY KEY,
+  description TEXT NOT NULL,
+  resource_id INTEGER,
+  
+  FOREIGN KEY(resource_id) REFERENCES resource(id)
+    ON UPDATE CASCADE
+    ON DELETE SET NULL
+);
+-- Update concept, attribute "title" intended as group code
+CREATE TABLE groupn (
+  title CHAR(4) PRIMARY KEY, 
+  damage SMALLINT, -- NOT NULL
+  risk SMALLINT, -- NOT NULL
+
+  CHECK (damage >= 1 AND damage <= 3),
+  CHECK (risk >= 1 AND risk <= 3)
+);
+CREATE TABLE condition_groupn (
+  condition_name VARCHAR(255) NOT NULL,
+  groupn_title CHAR(4) NOT NULL,  
+  
+  FOREIGN KEY(condition_name) REFERENCES condition(name)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(groupn_title) REFERENCES groupn(title)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+CREATE TABLE device_groupn (
+  device_name VARCHAR(255) NOT NULL,
+  groupn_title CHAR(4) NOT NULL,  
+  
+  FOREIGN KEY(device_name) REFERENCES device(name)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(groupn_title) REFERENCES groupn(title)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+CREATE TABLE task_groupn (
+  task_name VARCHAR(20) NOT NULL,
+  groupn_title CHAR(4) NOT NULL,  
+  
+  FOREIGN KEY(task_name) REFERENCES task(name)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(groupn_title) REFERENCES groupn(title)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE
+);
+CREATE TABLE intervention (
+  maintainer_shift_id INTEGER NOT NULL,
+  task_name VARCHAR(20) NOT NULL, 
+  town_cap CHAR(6) NOT NULL,
+  km CHAR(2) NOT NULL,
+  description TEXT,
+  start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+  end_at TIMESTAMP(0) WITHOUT TIME ZONE,
+
+  FOREIGN KEY(maintainer_shift_id) REFERENCES maintainer(shift_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(task_name) REFERENCES task(name)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
+  FOREIGN KEY(town_cap) REFERENCES town(cap)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
+
+  PRIMARY KEY(maintainer_shift_id, start_at),
+
+  CHECK(end_at > start_at)
+);
+CREATE TABLE inventory (
+  nr INTEGER NOT NULL,
+  device_name VARCHAR(255) NOT NULL, 
+  description TEXT,
+
+  FOREIGN KEY(device_name) REFERENCES device(name)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+    
+  PRIMARY KEY(nr, device_name)
+);
+CREATE TABLE borrow (
+  inventory_nr INTEGER NOT NULL,
+  inventory_device_name VARCHAR(255) NOT NULL, 
+  maintainer_shift_id INTEGER,
+  motivation TEXT,
+  start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+  end_at TIMESTAMP(0) WITHOUT TIME ZONE,
+
+  FOREIGN KEY(inventory_nr, inventory_device_name) REFERENCES inventory(nr, device_name)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
+  FOREIGN KEY(maintainer_shift_id) REFERENCES maintainer(shift_id)
+    ON UPDATE CASCADE
+    ON DELETE SET NULL,
+
+  PRIMARY KEY(inventory_nr, inventory_device_name, start_at),
+
+  CHECK(end_at > start_at)
+);
+CREATE TABLE assistance (
+  ticket SERIAL PRIMARY KEY,
+  maintainer_shift_id INTEGER,
+  start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
+  end_at TIMESTAMP(0) WITHOUT TIME ZONE,
+
+  FOREIGN KEY(maintainer_shift_id) REFERENCES maintainer(shift_id)
+    ON UPDATE CASCADE
+    ON DELETE SET NULL,
+
+  -- UNIQUE(maintainer_shift_id, start_at),
+  -- handle on trigger, check same date as with shift entity (turno)
+
+  CHECK(end_at > start_at)
+);
+CREATE TABLE attendee (
+  assistance_ticket INTEGER NOT NULL,
+  dispatcher_shift_id INTEGER NOT NULL,
+
+  FOREIGN KEY(assistance_ticket) REFERENCES assistance(ticket)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+  FOREIGN KEY(dispatcher_shift_id) REFERENCES dispatcher(shift_id)
+    ON UPDATE CASCADE
+    ON DELETE CASCADE,
+
+  PRIMARY KEY(assistance_ticket, dispatcher_shift_id)
+);
+ 
 INSERT INTO typology VALUES('pdf');
 INSERT INTO typology VALUES('video');
 INSERT INTO typology VALUES('image');
@@ -158,3 +424,190 @@ INSERT INTO attendee(assistance_ticket, dispatcher_shift_id) VALUES (4, 7);
 INSERT INTO attendee(assistance_ticket, dispatcher_shift_id) VALUES (5, 7);
 INSERT INTO attendee(assistance_ticket, dispatcher_shift_id) VALUES (6, 8);
 INSERT INTO attendee(assistance_ticket, dispatcher_shift_id) VALUES (6, 10);
+ 
+CREATE OR REPLACE FUNCTION shift_overlap_employee_type ()
+  RETURNS trigger AS $$
+    DECLARE
+      shift_id INTEGER;
+      other_table text;
+    BEGIN
+	  other_table = TG_ARGV[0];
+      EXECUTE format('SELECT shift_id FROM %I WHERE shift_id = $1', other_table) INTO shift_id USING NEW.shift_id;
+        IF shift_id IS NOT NULL THEN
+          RAISE EXCEPTION 'shift_overlap_employee_type(%). id Already exists', other_table
+            USING HINT = 'Please check your shift id on tables';
+        END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+
+-- Controllo se le date rientrano nei turni di un specifico dipendente che fa un operazione 
+
+CREATE OR REPLACE FUNCTION shift_dates_equalities_function()
+  RETURNS trigger AS $$
+    DECLARE
+      _shift record;
+    BEGIN
+        IF NEW.start_at IS NOT NULL THEN
+        SELECT * INTO _shift FROM shift WHERE id = NEW.maintainer_shift_id
+          AND NEW.start_at BETWEEN shift_date + interval '1 hour' * hour_start AND shift_date + interval '1 hour' * hour_end;
+        END IF;
+  
+        IF _shift IS NULL THEN
+          RAISE EXCEPTION 'shift_dates_equalities_intervention_function exception. Timestamp not valid for the shift'
+          USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
+        END IF;
+  
+        IF NEW.end_at IS NOT NULL THEN
+          SELECT * INTO _shift FROM shift WHERE id = NEW.maintainer_shift_id
+          AND NEW.end_at BETWEEN shift_date + interval '1 hour' * hour_start AND shift_date + interval '1 hour' * hour_end;
+        END IF;
+        
+        IF _shift IS NULL THEN
+          RAISE EXCEPTION 'shift_dates_equalities_intervention_function exception. Timestamp not valid for the shift'
+          USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
+        END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+
+CREATE OR REPLACE FUNCTION shift_overlap_employee_type ()
+  RETURNS trigger AS $$
+    DECLARE
+      shift_id INTEGER;
+      other_table text;
+    BEGIN
+	  other_table = TG_ARGV[0];
+      EXECUTE format('SELECT shift_id FROM %I WHERE shift_id = $1', other_table) INTO shift_id USING NEW.shift_id;
+        IF shift_id IS NOT NULL THEN
+          RAISE EXCEPTION 'shift_overlap_employee_type(%). id Already exists', other_table
+            USING HINT = 'Please check your shift id on tables';
+        END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+
+-- Controllo se le date rientrano nei turni di un specifico dipendente che fa un operazione 
+
+CREATE OR REPLACE FUNCTION shift_dates_equalities_function()
+  RETURNS trigger AS $$
+    DECLARE
+      _shift record;
+    BEGIN
+        IF NEW.start_at IS NOT NULL THEN
+        SELECT * INTO _shift FROM shift WHERE id = NEW.maintainer_shift_id
+          AND NEW.start_at BETWEEN shift_date + interval '1 hour' * hour_start AND shift_date + interval '1 hour' * hour_end;
+        END IF;
+  
+        IF _shift IS NULL THEN
+          RAISE EXCEPTION 'shift_dates_equalities_intervention_function exception. Timestamp not valid for the shift'
+          USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
+        END IF;
+  
+        IF NEW.end_at IS NOT NULL THEN
+          SELECT * INTO _shift FROM shift WHERE id = NEW.maintainer_shift_id
+          AND NEW.end_at BETWEEN shift_date + interval '1 hour' * hour_start AND shift_date + interval '1 hour' * hour_end;
+        END IF;
+        
+        IF _shift IS NULL THEN
+          RAISE EXCEPTION 'shift_dates_equalities_intervention_function exception. Timestamp not valid for the shift'
+          USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
+        END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+
+CREATE TRIGGER shift_overlap_employee_type_trigger
+  BEFORE INSERT OR UPDATE
+  ON maintainer
+  FOR EACH ROW EXECUTE PROCEDURE shift_overlap_employee_type('dispatcher');
+CREATE TRIGGER shift_overlap_employee_type_trigger
+  BEFORE INSERT OR UPDATE
+  ON dispatcher
+  FOR EACH ROW EXECUTE PROCEDURE shift_overlap_employee_type('maintainer');
+CREATE OR REPLACE FUNCTION media_is_resource_a_leaf ()
+  RETURNS trigger AS $$
+    DECLARE
+      resource_tb record;
+    BEGIN
+        WITH RECURSIVE tree AS (
+          SELECT resource.id FROM resource WHERE id = NEW.resource_id
+          UNION ALL
+
+          SELECT r.id
+          FROM resource r JOIN tree p ON p.id = r.parent
+        ) SELECT * INTO resource_tb FROM tree WHERE id != NEW.resource_id;
+
+        IF resource_tb IS NOT NULL THEN
+          RAISE EXCEPTION 'media_is_resource_a_leaf (%). resource_id is not a leaf', NEW.resource_id
+            USING HINT = 'Please check your resource table';
+        END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER media_is_resource_a_leaf_trigger
+  BEFORE INSERT OR UPDATE
+  ON attachment
+  FOR EACH ROW EXECUTE PROCEDURE media_is_resource_a_leaf();
+CREATE TRIGGER shift_dates_equalities_intervention_trigger
+  BEFORE INSERT OR UPDATE
+  ON intervention
+  FOR EACH ROW EXECUTE PROCEDURE shift_dates_equalities_function();
+
+CREATE TRIGGER shift_dates_equalities_borrow_trigger
+  BEFORE INSERT OR UPDATE
+  ON borrow
+  FOR EACH ROW EXECUTE PROCEDURE shift_dates_equalities_function();
+
+-- Un manutentore non può fare altri interventi (indipendentemente dalla mansione) una volta che ha iniziato un determinato intervento
+
+CREATE OR REPLACE FUNCTION maintainer_is_already_occupied_intervention()
+  RETURNS trigger AS $$
+    DECLARE
+      _intervents record;
+    BEGIN
+      SELECT maintainer_shift_id INTO _intervents FROM intervention WHERE maintainer_shift_id = NEW.maintainer_shift_id AND end_at IS NULL;
+      IF _intervents IS NOT NULL THEN
+        RAISE EXCEPTION 'maintainer_is_already_occupied_intervention exception. The maintaner had to finish others intervention first!'
+        USING HINT = 'Please check intervetions';
+      END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER maintainer_is_already_occupied_intervention_trigger
+  BEFORE INSERT
+  ON intervention
+  FOR EACH ROW EXECUTE PROCEDURE maintainer_is_already_occupied_intervention();
+
+CREATE TRIGGER shift_dates_equalities_assistance_trigger
+  BEFORE INSERT OR UPDATE
+  ON assistance
+  FOR EACH ROW EXECUTE PROCEDURE shift_dates_equalities_function();
+
+-- Un manutentore non può prendere in prestito un oggetto non ancora restituito.
+
+CREATE OR REPLACE FUNCTION maintainer_borrow_not_available_object()
+  RETURNS trigger AS $$
+    DECLARE
+      _borrow record;
+    BEGIN
+      SELECT maintainer_shift_id INTO _borrow FROM borrow WHERE maintainer_shift_id = NEW.maintainer_shift_id 
+        AND end_at IS NULL AND inventory_nr = NEW.inventory_nr AND inventory_device_name = NEW.inventory_device_name;
+      IF _borrow IS NOT NULL THEN
+        RAISE EXCEPTION 'maintainer_borrow_not_available_object exception. The Object is not available!'
+        USING HINT = 'Please check objects restitution date';
+      END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+CREATE TRIGGER maintainer_borrow_not_available_object_trigger
+  BEFORE INSERT
+  ON borrow
+  FOR EACH ROW EXECUTE PROCEDURE maintainer_borrow_not_available_object();

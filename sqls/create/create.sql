@@ -1,3 +1,4 @@
+ 
 CREATE TABLE typology (
   type VARCHAR(6) PRIMARY KEY
 );
@@ -205,7 +206,7 @@ CREATE TABLE intervention (
   CHECK(end_at > start_at)
 );
 CREATE TABLE inventory (
-  nr SERIAL, -- NOT NULL
+  nr INTEGER NOT NULL,
   device_name VARCHAR(255) NOT NULL, 
   description TEXT,
 
