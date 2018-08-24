@@ -1,2 +1,3 @@
-INSERT INTO office(address, mail, phone, town_cap) VALUES ('Via donizzetti', 'donizzetti@gmail.com', '0522-646429', '41033');
-INSERT INTO office(address, mail, phone, town_cap) VALUES ('Via J.F Kennedy', 'kennedy@usa.it', '0522-323232', '41011');
+INSERT INTO office(address, mail, phone, town_cap) VALUES ('A1 AdS Secchia Ovest, 506', 'asmodena@autostrade.it', '800 108 108', 41123);
+INSERT INTO office(address, mail, phone, town_cap) VALUES ('Via Fernando Fornaciari, 1', 'ascarpi@autostrade.it', '059 668253', 41012);
+INSERT INTO office(address, mail, phone, town_cap) VALUES ('A1 casello di Reggio Emilia', 'asreggio@autostrade.it', '800 269 269', 42124);

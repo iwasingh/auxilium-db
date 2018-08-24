@@ -1,11 +1,7 @@
-CREATE TABLE device_groupn (
-  device_name VARCHAR(255) NOT NULL,
-  groupn_title CHAR(4) NOT NULL,  
-  
-  FOREIGN KEY(device_name) REFERENCES device(name)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
-  FOREIGN KEY(groupn_title) REFERENCES groupn(title)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
-);
+INSERT INTO device_groupn (device_name, groupn_title) VALUES('guanti', 'PE00');
+INSERT INTO device_groupn (device_name, groupn_title) VALUES('indumenti a norma', 'PE00');
+INSERT INTO device_groupn (device_name, groupn_title) VALUES('guanti', 'PE01');
+INSERT INTO device_groupn (device_name, groupn_title) VALUES('indumenti a norma', 'PE01');
+INSERT INTO device_groupn (device_name, groupn_title) VALUES('guanti', 'PE02');
+INSERT INTO device_groupn (device_name, groupn_title) VALUES('puntali', 'PE02');
+INSERT INTO device_groupn (device_name, groupn_title) VALUES('indumenti a norma', 'PE02');

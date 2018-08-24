@@ -1,19 +1,8 @@
-CREATE TABLE borrow (
-  inventory_nr INTEGER NOT NULL,
-  inventory_device_name VARCHAR(255) NOT NULL, 
-  maintainer_shift_id INTEGER,
-  motivation TEXT,
-  start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
-  end_at TIMESTAMP(0) WITHOUT TIME ZONE,
-
-  FOREIGN KEY(inventory_nr, inventory_device_name) REFERENCES inventory(nr, device_name)
-    ON UPDATE CASCADE
-    ON DELETE NO ACTION,
-  FOREIGN KEY(maintainer_shift_id) REFERENCES maintainer(shift_id)
-    ON UPDATE CASCADE
-    ON DELETE SET NULL,
-
-  PRIMARY KEY(inventory_nr, inventory_device_name, start_at),
-
-  CHECK(end_at > start_at)
-);
+-- query per mostrare i possibili dpi richiesti
+INSERT INTO borrow(inventory_nr, inventory_device_name, maintainer_shift_id, motivation, start_at, end_at) VALUES(1, 'guanti', 2, 'DPI minimale per classe di pericolo indicata PE00', '2018-08-19 16:25:00', '2018-08-19 18:38:00');
+INSERT INTO borrow(inventory_nr, inventory_device_name, maintainer_shift_id, motivation, start_at, end_at) VALUES(1, 'indumenti a norma', 2, 'DPI minimale per classe di pericolo indicata PE00', '2018-08-19 16:25:00', '2018-08-19 18:38:00');
+INSERT INTO borrow(inventory_nr, inventory_device_name, maintainer_shift_id, motivation, start_at, end_at) VALUES(1, 'guanti', 6, 'DPI minimale per classe di pericolo indicata PE01', '2018-08-21 12:50:00', '2018-08-21 13:30:00');
+INSERT INTO borrow(inventory_nr, inventory_device_name, maintainer_shift_id, motivation, start_at, end_at) VALUES(1, 'indumenti a norma', 6, 'DPI minimale per classe di pericolo indicata PE01', '2018-08-21 12:50:00', '2018-08-21 13:30:00');
+INSERT INTO borrow(inventory_nr, inventory_device_name, maintainer_shift_id, motivation, start_at, end_at) VALUES(1, 'guanti', 9, 'DPI minimale per classe di pericolo indicata PE02', '2018-08-22 10:15:00', '2018-08-22 11:28:00');
+INSERT INTO borrow(inventory_nr, inventory_device_name, maintainer_shift_id, motivation, start_at, end_at) VALUES(1, 'indumenti a norma', 9, 'DPI minimale per classe di pericolo indicata PE02', '2018-08-22 10:15:00', '2018-08-22 11:28:00');
+INSERT INTO borrow(inventory_nr, inventory_device_name, maintainer_shift_id, motivation, start_at, end_at) VALUES(1, 'puntali', 9, 'DPI minimale per classe di pericolo indicata PE02', '2018-08-22 10:15:00', '2018-08-22 11:28:00');

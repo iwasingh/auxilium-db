@@ -1,20 +1,12 @@
-INSERT INTO inventory(device_name) VALUES ('puntali');
-INSERT INTO inventory(device_name) VALUES ('puntali');
-INSERT INTO inventory(device_name) VALUES ('puntali');
-INSERT INTO inventory(device_name) VALUES ('puntali');
-
-INSERT INTO inventory(device_name) VALUES ('guanti');
-INSERT INTO inventory(device_name) VALUES ('guanti');
-INSERT INTO inventory(device_name) VALUES ('guanti');
-INSERT INTO inventory(device_name) VALUES ('guanti');
-
-INSERT INTO inventory(device_name) VALUES ('maschera');
-INSERT INTO inventory(device_name) VALUES ('maschera');
-INSERT INTO inventory(device_name) VALUES ('maschera');
-INSERT INTO inventory(device_name) VALUES ('maschera');
-
-INSERT INTO inventory(device_name) VALUES ('indumenti a norma');
-INSERT INTO inventory(device_name) VALUES ('indumenti a norma');
-INSERT INTO inventory(device_name) VALUES ('indumenti a norma');
-INSERT INTO inventory(device_name) VALUES ('indumenti a norma');
-
+INSERT INTO inventory(nr, device_name) VALUES (1, 'puntali');
+INSERT INTO inventory(nr, device_name) VALUES (2, 'puntali');
+INSERT INTO inventory(nr, device_name) VALUES (3, 'puntali');
+INSERT INTO inventory(nr, device_name) VALUES (4, 'puntali');
+INSERT INTO inventory(nr, device_name) VALUES (1, 'guanti');
+INSERT INTO inventory(nr, device_name) VALUES (2, 'guanti');
+INSERT INTO inventory(nr, device_name) VALUES (3, 'guanti');
+INSERT INTO inventory(nr, device_name) VALUES (4, 'guanti');
+INSERT INTO inventory(nr, device_name) VALUES (1, 'maschera');
+INSERT INTO inventory(nr, device_name) VALUES (2, 'maschera');
+INSERT INTO inventory(nr, device_name) VALUES (1, 'indumenti a norma');
+INSERT INTO inventory(nr, device_name) VALUES (2, 'indumenti a norma');

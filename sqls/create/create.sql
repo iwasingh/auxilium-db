@@ -1,4 +1,3 @@
- 
 CREATE TABLE typology (
   type VARCHAR(6) PRIMARY KEY
 );
@@ -186,7 +185,7 @@ CREATE TABLE intervention (
   maintainer_shift_id INTEGER NOT NULL,
   task_name VARCHAR(20) NOT NULL, 
   town_cap CHAR(6) NOT NULL,
-  address VARCHAR(40) NOT NULL,
+  km CHAR(2) NOT NULL,
   description TEXT,
   start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
   end_at TIMESTAMP(0) WITHOUT TIME ZONE,

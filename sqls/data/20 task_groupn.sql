@@ -1,11 +1,5 @@
-CREATE TABLE task_groupn (
-  task_name VARCHAR(20) NOT NULL,
-  groupn_title CHAR(4) NOT NULL,  
-  
-  FOREIGN KEY(task_name) REFERENCES task(name)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
-  FOREIGN KEY(groupn_title) REFERENCES groupn(title)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
-);
+INSERT INTO task_groupn(task_name, groupn_title) VALUES ('ELETT_05', 'PE00');
+INSERT INTO task_groupn(task_name, groupn_title) VALUES ('ELETT_05', 'PE01');
+INSERT INTO task_groupn(task_name, groupn_title) VALUES ('ELETT_06', 'PE00');
+INSERT INTO task_groupn(task_name, groupn_title) VALUES ('ELETT_06', 'PE01');
+INSERT INTO task_groupn(task_name, groupn_title) VALUES ('ELETT_06', 'PE02');

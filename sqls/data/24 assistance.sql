@@ -1,15 +1,7 @@
-CREATE TABLE assistance (
-  ticket SERIAL PRIMARY KEY,
-  maintainer_shift_id INTEGER,
-  start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
-  end_at TIMESTAMP(0) WITHOUT TIME ZONE,
-
-  FOREIGN KEY(maintainer_shift_id) REFERENCES maintainer(shift_id)
-    ON UPDATE CASCADE
-    ON DELETE SET NULL,
-
-  -- UNIQUE(maintainer_shift_id, start_at),
-  -- handle on trigger, check same date as with shift entity (turno)
-
-  CHECK(end_at > start_at)
-);
+-- trigger check date & hour
+INSERT INTO assistance (maintainer_shift_id, start_at, end_at) VALUES (1, '2018-08-19 13:04:11', '2018-08-19 13:27:35');
+INSERT INTO assistance (maintainer_shift_id, start_at, end_at) VALUES (2, '2018-08-19 16:04:11', '2018-08-19 16:27:35');
+INSERT INTO assistance (maintainer_shift_id, start_at, end_at) VALUES (4, '2018-08-21 10:58:43', '2018-08-21 11:07:12');
+INSERT INTO assistance (maintainer_shift_id, start_at, end_at) VALUES (4, '2018-08-21 16:18:39', '2018-08-21 16:37:22');
+INSERT INTO assistance (maintainer_shift_id, start_at, end_at) VALUES (6, '2018-08-21 10:34:25', '2018-08-21 11:13:48');
+INSERT INTO assistance (maintainer_shift_id, start_at, end_at) VALUES (9, '2018-08-22 06:51:35', '2018-08-22 07:04:06');

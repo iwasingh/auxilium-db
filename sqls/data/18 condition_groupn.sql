@@ -1,11 +1,6 @@
-CREATE TABLE condition_groupn (
-  condition_name VARCHAR(255) NOT NULL,
-  groupn_title CHAR(4) NOT NULL,  
-  
-  FOREIGN KEY(condition_name) REFERENCES condition(name)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE,
-  FOREIGN KEY(groupn_title) REFERENCES groupn(title)
-    ON UPDATE CASCADE
-    ON DELETE CASCADE
-);
+INSERT INTO condition_groupn (condition_name, groupn_title) VALUES('puntali protetti', 'PE00');
+INSERT INTO condition_groupn (condition_name, groupn_title) VALUES('parti scoperte in tensione entro 30 cm', 'PE00');
+INSERT INTO condition_groupn (condition_name, groupn_title) VALUES('puntali protetti', 'PE01');
+INSERT INTO condition_groupn (condition_name, groupn_title) VALUES('parti scoperte in tensione oltre 30 cm', 'PE01');
+INSERT INTO condition_groupn (condition_name, groupn_title) VALUES('puntali non protetti', 'PE02');
+INSERT INTO condition_groupn (condition_name, groupn_title) VALUES('parti scoperte qualsiasi condizione', 'PE02');
