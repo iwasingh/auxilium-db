@@ -1,6 +1,6 @@
 CREATE TABLE inventory (
   nr INTEGER NOT NULL,
-  device_name VARCHAR(255) NOT NULL, 
+  device_name VARCHAR(50) NOT NULL, 
   description TEXT,
 
   FOREIGN KEY(device_name) REFERENCES device(name)

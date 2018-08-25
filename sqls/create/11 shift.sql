@@ -1,6 +1,6 @@
 CREATE TABLE shift (
   id SERIAL PRIMARY KEY,
-  shift_date DATE NOT NULL, -- DD/MM/YYYY?
+  shift_date DATE NOT NULL,
   employee_cf CHAR(16) NOT NULL,
   session_id INTEGER NOT NULL,
   hour_start SMALLINT NOT NULL,
@@ -17,6 +17,6 @@ CREATE TABLE shift (
   UNIQUE(shift_date, session_id),
 
   CHECK(hour_start >= 0 AND hour_start < 24),
-  CHECK(hour_end >= 0 AND hour_end < 24)
-  --, CHECK(hour_start != hour_end)
+  CHECK(hour_end >= 0 AND hour_end < 24),
+  CHECK(hour_end > hour_start)
 );

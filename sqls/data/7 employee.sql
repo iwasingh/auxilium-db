@@ -1,7 +1,7 @@
-INSERT INTO employee(cf, name, surname, office_id) VALUES ('ASDASDASD234325Z', 'Matteo', 'Guerzoni', 2);
-INSERT INTO employee(cf, name, surname, office_id) VALUES ('SNGMT1235SFGTRFS', 'Amarjot', 'Singh', 2);
-INSERT INTO employee(cf, name, surname, office_id) VALUES ('S32GMT1235SFGTRF', 'Mario', 'Rossi', 1);
-INSERT INTO employee(cf, name, surname, office_id) VALUES ('SN23MT12353EGTRF', 'Luigi', 'Rossi', 1);
-INSERT INTO employee(cf, name, surname, office_id) VALUES ('SRGSDFGC123SFLR5', 'Sergio', 'Ferretti', 3);
-INSERT INTO employee(cf, name, surname, office_id) VALUES ('FRCNPNGSWEWE23SS', 'Francesco', 'Pannofino', 1);
-INSERT INTO employee(cf, name, surname, office_id) VALUES ('ALTFAORS24DFS2RA', 'Altair', 'Mohmuz', 3);
+INSERT INTO employee (cf, name, surname, office_id) VALUES ('GRZMTT83G40F230E', 'Matteo', 'Guerzoni', 2);
+INSERT INTO employee (cf, name, surname, office_id) VALUES ('SNGMJT80L08F257P', 'Amarjot', 'Singh', 2);
+INSERT INTO employee (cf, name, surname, office_id) VALUES ('RSSMRA77P03D150X', 'Mario', 'Rossi', 1);
+INSERT INTO employee (cf, name, surname, office_id) VALUES ('BNCLGU91C23G224S', 'Luigi', 'Bianchi', 1);
+INSERT INTO employee (cf, name, surname, office_id) VALUES ('SRGFRT89C10H223C', 'Sergio', 'Ferretti', 3);
+INSERT INTO employee (cf, name, surname, office_id) VALUES ('PNFFNC84D07I462B', 'Francesco', 'Panofino', 1);
+INSERT INTO employee (cf, name, surname, office_id) VALUES ('LTRCRL94P15B819G', 'Carlo', 'Altero', 3);
