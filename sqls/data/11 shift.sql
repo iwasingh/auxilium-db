@@ -6,5 +6,5 @@ INSERT INTO shift (id, shift_date, employee_cf, session_id, hour_start, hour_end
 INSERT INTO shift (id, shift_date, employee_cf, session_id, hour_start, hour_end) VALUES (6, '2018-08-21', 'BNCLGU91C23G224S', 1002, 6, 14);
 INSERT INTO shift (id, shift_date, employee_cf, session_id, hour_start, hour_end) VALUES (7, '2018-08-21', 'SRGFRT89C10H223C', 1003, 10, 19);
 INSERT INTO shift (id, shift_date, employee_cf, session_id, hour_start, hour_end) VALUES (8, '2018-08-22', 'GRZMTT83G40F230E', 1000, 5, 13);
-INSERT INTO shift (id, shift_date, employee_cf, session_id, hour_start, hour_end) VALUES (9, '2018-08-22', 'SRGFRT89C10H223C', 1001, 4, 10);
+INSERT INTO shift (id, shift_date, employee_cf, session_id, hour_start, hour_end) VALUES (9, '2018-08-22', 'SRGFRT89C10H223C', 1001, 4, 12);
 INSERT INTO shift (id, shift_date, employee_cf, session_id, hour_start, hour_end) VALUES (10, '2018-08-22', 'PNFFNC84D07I462B', 1002, 3, 11);
