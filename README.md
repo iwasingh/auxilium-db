@@ -79,4 +79,6 @@ make triggers
 * **Matteo Guerzoni**
 
 ## Licenza
+Apache License
+
 Alcuni diritti sono riservati
