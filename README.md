@@ -5,16 +5,16 @@ Dopo la competizione si è scelto di estenderlo per proporlo come progetto d'esa
 
 ## Struttura del progetto
 ```
-├── Auxilium.pdf                        # Pdf del progetto 
+├── Auxilium.pdf                        # Pdf del progetto
 └── Project                             # Main directory del progetto
-   	├── charts                          # Grafici e infografiche
+    ├── charts                          # Grafici e infografiche
     ├── dias                            # Tutti i file .dia
     ├── pngs                            # Tutti i file .pngs
     └── sqls                            # Tutti i file .sql
-				├── auxilium.sql                # File contenente il sql di creazione e inserimento(generato dal comando make sql)
-       	├── export.sql                  # File di esportazione ottenuto da postgresql
-				├── create                      # Query creazione
-				├── insert                      # Query inserimento
+        ├── auxilium.sql                # File contenente il sql di creazione e inserimento(generato dal comando make sql)
+        ├── export.sql                  # File di esportazione ottenuto da postgresql
+        ├── create                      # Query creazione
+        ├── insert                      # Query inserimento
         ├── delete                      # Query eliminazione
         ├── select                      # Query di interrogazione
         ├── triggers                    # Triggers/Procedure
