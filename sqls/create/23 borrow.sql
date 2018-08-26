@@ -1,7 +1,7 @@
 CREATE TABLE borrow (
-  inventory_nr INTEGER NOT NULL,
-  inventory_device_name VARCHAR(255) NOT NULL, 
   maintainer_shift_id INTEGER,
+  inventory_nr INTEGER NOT NULL,
+  inventory_device_name VARCHAR(50) NOT NULL, 
   motivation TEXT,
   start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
   end_at TIMESTAMP(0) WITHOUT TIME ZONE,

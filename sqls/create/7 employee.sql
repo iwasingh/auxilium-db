@@ -1,9 +1,14 @@
 CREATE TABLE employee (
   cf CHAR(16) PRIMARY KEY,
-  name VARCHAR(30),
-  surname VARCHAR(30),
-  office_id INTEGER,
+  name VARCHAR(30) NOT NULL,
+  surname VARCHAR(30) NOT NULL,
+  address VARCHAR(40) NOT NULL,
+  town_cap CHAR(6) NOT NULL,
+  office_id INTEGER NOT NULL,
 
+  FOREIGN KEY(town_cap) REFERENCES town(cap)
+    ON UPDATE CASCADE
+    ON DELETE NO ACTION,
   FOREIGN KEY (office_id) REFERENCES office(id)
     ON UPDATE CASCADE
     ON DELETE SET NULL 

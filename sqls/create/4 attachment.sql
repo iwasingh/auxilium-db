@@ -1,4 +1,3 @@
--- Composite PK means default not null?
 CREATE TABLE attachment (
   resource_id INTEGER NOT NULL,
   media_id INTEGER NOT NULL,

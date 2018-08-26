@@ -1,4 +1,3 @@
--- Foreign key means default not null?
 CREATE TABLE office (
   id SERIAL PRIMARY KEY,
   address VARCHAR(40) NOT NULL,

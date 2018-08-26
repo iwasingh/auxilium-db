@@ -1,5 +1,5 @@
 CREATE TABLE task (
-  name VARCHAR(20) PRIMARY KEY,
+  name CHAR(8) PRIMARY KEY,
   description TEXT NOT NULL,
   resource_id INTEGER,
   

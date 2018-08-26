@@ -1,3 +1,3 @@
 CREATE TABLE condition (
-  name VARCHAR(255) PRIMARY KEY
+  name VARCHAR(50) PRIMARY KEY
 );
