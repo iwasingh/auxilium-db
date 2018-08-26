@@ -21,10 +21,18 @@ Dopo la competizione si è scelto di estenderlo per proporlo come progetto d'esa
         └── update                      # Query di aggiornamento
 ```
 ## Generazione sql
-Se il file ```export.sql``` desse problemi, è possibile generare direttamente il sql tramite i seguenti comandi make dalla directory Project.
+Se il file ```export.sql``` desse problemi, è possibile generare direttamente il sql tramite i seguenti comandi make dalla directory ```Project```.
 È consigliabile usare il file ```export.sql``` poichè la generazione sql non è detto che funzioni(testato solo su Debian 9). In alternativa
 è comunque possibile ottenere il codice sql da ogni singolo file presente nelle sottodirectory sotto ```sqls```
 
+
+Per la generazione è importante quindi posizionarsi sulla directory Project
+```
+cd Project
+```
+e successivamente eseguire i comandi esposti.
+
+```
 #### Generazione dell'intero file sql 
 Verrà generato il file ```auxilium.sql``` che sarà presente all'interno della directory ```sqls```
 ATTENZIONE: questo file conterrà solo le query di CREAZIONE, INSERIMENTO E TRIGGERS/PROCEDURE
