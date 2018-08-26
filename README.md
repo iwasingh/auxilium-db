@@ -72,3 +72,11 @@ Questo comando genererà un file ```triggers.sql``` dentro la directory ```sqls/
 ```
 make triggers
 ```
+
+## Autori 
+
+* **Singh Amarjot** 
+* **Matteo Guerzoni**
+
+## Licenza
+Alcuni diritti sono riservati
