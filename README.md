@@ -32,7 +32,6 @@ cd Project
 ```
 e successivamente eseguire i comandi esposti.
 
-```
 #### Generazione dell'intero file sql 
 Verrà generato il file ```auxilium.sql``` che sarà presente all'interno della directory ```sqls```
 ATTENZIONE: questo file conterrà solo le query di CREAZIONE, INSERIMENTO E TRIGGERS/PROCEDURE
