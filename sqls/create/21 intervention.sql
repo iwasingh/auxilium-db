@@ -2,7 +2,7 @@ CREATE TABLE intervention (
   maintainer_shift_id INTEGER NOT NULL,
   task_name CHAR(8) NOT NULL, 
   town_cap CHAR(6) NOT NULL,
-  km SMALLINT NOT NULL,
+  address VARCHAR(40) NOT NULL,
   description TEXT,
   start_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
   end_at TIMESTAMP(0) WITHOUT TIME ZONE,
