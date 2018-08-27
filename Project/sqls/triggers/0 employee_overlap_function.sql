@@ -1,3 +1,9 @@
+/*
+* Controllo se un dipendente inserito come manutentore con un particolare shift_id non si ripeta nella tabella other_table
+* other_table è un parametro, in modo da generalizzare la function a qualsiasi tabella passata in parametro.
+* Per ora le tabelle di interesse sono: 'dispatcher', 'maintainer'
+* Vedere sezione Vincoli Aggiuntivi
+*/
 CREATE OR REPLACE FUNCTION shift_overlap_employee_type ()
   RETURNS trigger AS $$
     DECLARE

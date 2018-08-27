@@ -13,5 +13,3 @@ SELECT * FROM attachment JOIN (
 		WHERE NOT EXISTS (
 			SELECT r.parent FROM resource r WHERE r.parent = n.id )
 ) as leaves ON leaves.id = attachment.resource_id 
-
---

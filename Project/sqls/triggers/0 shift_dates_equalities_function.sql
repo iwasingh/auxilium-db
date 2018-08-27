@@ -1,5 +1,6 @@
 -- Controllo se le date rientrano nei turni di un specifico dipendente che fa un operazione 
-
+-- Vedere sezione  'Vincoli aggiuntivi'
+-- Funzione generica, usata dai triggers per ogni tabella di interesse (es intervention)
 CREATE OR REPLACE FUNCTION shift_dates_equalities_function()
   RETURNS trigger AS $$
     DECLARE

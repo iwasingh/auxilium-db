@@ -1,3 +1,6 @@
+/*
+* Controllo se un allegato si riferisca sempre a una foglia dell'albero delle risorse
+*/
 CREATE OR REPLACE FUNCTION media_is_resource_a_leaf ()
   RETURNS trigger AS $$
     DECLARE
