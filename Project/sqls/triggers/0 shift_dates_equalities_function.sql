@@ -1,6 +1,8 @@
--- Controllo se le date rientrano nei turni di un specifico dipendente che fa un operazione 
--- Vedere sezione  'Vincoli aggiuntivi'
--- Funzione generica, usata dai triggers per ogni tabella di interesse (es intervention)
+/*
+* Controllo se le date rientrano nei turni di un specifico dipendente che fa un operazione 
+* Vedere sezione  'Vincoli aggiuntivi'
+* Funzione generica, usata dai triggers per ogni tabella di interesse (es intervention)
+*/
 CREATE OR REPLACE FUNCTION shift_dates_equalities_function()
   RETURNS trigger AS $$
     DECLARE
@@ -12,7 +14,7 @@ CREATE OR REPLACE FUNCTION shift_dates_equalities_function()
         END IF;
   
         IF _shift IS NULL THEN
-          RAISE EXCEPTION 'shift_dates_equalities_intervention_function exception. Timestamp not valid for the shift'
+          RAISE EXCEPTION 'shift_dates_equalities_function exception. Timestamp not valid for the shift'
           USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
         END IF;
   
@@ -22,7 +24,7 @@ CREATE OR REPLACE FUNCTION shift_dates_equalities_function()
         END IF;
         
         IF _shift IS NULL THEN
-          RAISE EXCEPTION 'shift_dates_equalities_intervention_function exception. Timestamp not valid for the shift'
+          RAISE EXCEPTION 'shift_dates_equalities_function exception. Timestamp not valid for the shift'
           USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
         END IF;
       RETURN NEW;
