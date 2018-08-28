@@ -1,3 +1,152 @@
+ 
+/*
+* Controllo se un dipendente inserito come manutentore con un particolare shift_id non si ripeta nella tabella other_table
+* other_table è un parametro, in modo da generalizzare la function a qualsiasi tabella passata in parametro.
+* Per ora le tabelle di interesse sono: 'dispatcher', 'maintainer'
+* Vedere sezione Vincoli Aggiuntivi
+*/
+CREATE OR REPLACE FUNCTION shift_overlap_employee_type ()
+  RETURNS trigger AS $$
+    DECLARE
+      shift_id INTEGER;
+      other_table text;
+    BEGIN
+	  other_table = TG_ARGV[0];
+      EXECUTE format('SELECT shift_id FROM %I WHERE shift_id = $1', other_table) INTO shift_id USING NEW.shift_id;
+        IF shift_id IS NOT NULL THEN
+          RAISE EXCEPTION 'shift_overlap_employee_type(%). id Already exists', other_table
+            USING HINT = 'Please check your shift id on tables';
+        END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+
+/*
+* Controllo se la risorsa in questione fa riferimento a un nodo dell'albero di tipo foglia
+*/
+CREATE OR REPLACE FUNCTION is_resource_a_leaf ()
+  RETURNS trigger AS $$
+    DECLARE
+      resource_tb record;
+    BEGIN
+      IF NEW.resource_id IS NOT NULL THEN
+        SELECT resource.id INTO resource_tb FROM resource WHERE resource.parent = NEW.resource_id;
+        IF resource_tb IS NOT NULL THEN
+          RAISE EXCEPTION 'is_resource_a_leaf (%). resource_id is not a leaf', NEW.resource_id
+            USING HINT = 'Please check your resource table';
+        END IF;
+      END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';/*
+* Controllo se le date rientrano nei turni di un specifico dipendente che fa un operazione 
+* Vedere sezione  'Vincoli aggiuntivi'
+* Funzione generica, usata dai triggers per ogni tabella di interesse (es intervention)
+*/
+CREATE OR REPLACE FUNCTION shift_dates_equalities_function()
+  RETURNS trigger AS $$
+    DECLARE
+      _shift record;
+    BEGIN
+        IF NEW.start_at IS NOT NULL THEN
+        SELECT * INTO _shift FROM shift WHERE id = NEW.maintainer_shift_id
+          AND NEW.start_at BETWEEN shift_date + interval '1 hour' * hour_start AND shift_date + interval '1 hour' * hour_end;
+        END IF;
+  
+        IF _shift IS NULL THEN
+          RAISE EXCEPTION 'shift_dates_equalities_function exception. Timestamp not valid for the shift'
+          USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
+        END IF;
+  
+        IF NEW.end_at IS NOT NULL THEN
+          SELECT * INTO _shift FROM shift WHERE id = NEW.maintainer_shift_id
+          AND NEW.end_at BETWEEN shift_date + interval '1 hour' * hour_start AND shift_date + interval '1 hour' * hour_end;
+        END IF;
+        
+        IF _shift IS NULL THEN
+          RAISE EXCEPTION 'shift_dates_equalities_function exception. Timestamp not valid for the shift'
+          USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
+        END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+
+/*
+* Controllo se un dipendente inserito come manutentore con un particolare shift_id non si ripeta nella tabella other_table
+* other_table è un parametro, in modo da generalizzare la function a qualsiasi tabella passata in parametro.
+* Per ora le tabelle di interesse sono: 'dispatcher', 'maintainer'
+* Vedere sezione Vincoli Aggiuntivi
+*/
+CREATE OR REPLACE FUNCTION shift_overlap_employee_type ()
+  RETURNS trigger AS $$
+    DECLARE
+      shift_id INTEGER;
+      other_table text;
+    BEGIN
+	  other_table = TG_ARGV[0];
+      EXECUTE format('SELECT shift_id FROM %I WHERE shift_id = $1', other_table) INTO shift_id USING NEW.shift_id;
+        IF shift_id IS NOT NULL THEN
+          RAISE EXCEPTION 'shift_overlap_employee_type(%). id Already exists', other_table
+            USING HINT = 'Please check your shift id on tables';
+        END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+
+/*
+* Controllo se la risorsa in questione fa riferimento a un nodo dell'albero di tipo foglia
+*/
+CREATE OR REPLACE FUNCTION is_resource_a_leaf ()
+  RETURNS trigger AS $$
+    DECLARE
+      resource_tb record;
+    BEGIN
+      IF NEW.resource_id IS NOT NULL THEN
+        SELECT resource.id INTO resource_tb FROM resource WHERE resource.parent = NEW.resource_id;
+        IF resource_tb IS NOT NULL THEN
+          RAISE EXCEPTION 'is_resource_a_leaf (%). resource_id is not a leaf', NEW.resource_id
+            USING HINT = 'Please check your resource table';
+        END IF;
+      END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';/*
+* Controllo se le date rientrano nei turni di un specifico dipendente che fa un operazione 
+* Vedere sezione  'Vincoli aggiuntivi'
+* Funzione generica, usata dai triggers per ogni tabella di interesse (es intervention)
+*/
+CREATE OR REPLACE FUNCTION shift_dates_equalities_function()
+  RETURNS trigger AS $$
+    DECLARE
+      _shift record;
+    BEGIN
+        IF NEW.start_at IS NOT NULL THEN
+        SELECT * INTO _shift FROM shift WHERE id = NEW.maintainer_shift_id
+          AND NEW.start_at BETWEEN shift_date + interval '1 hour' * hour_start AND shift_date + interval '1 hour' * hour_end;
+        END IF;
+  
+        IF _shift IS NULL THEN
+          RAISE EXCEPTION 'shift_dates_equalities_function exception. Timestamp not valid for the shift'
+          USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
+        END IF;
+  
+        IF NEW.end_at IS NOT NULL THEN
+          SELECT * INTO _shift FROM shift WHERE id = NEW.maintainer_shift_id
+          AND NEW.end_at BETWEEN shift_date + interval '1 hour' * hour_start AND shift_date + interval '1 hour' * hour_end;
+        END IF;
+        
+        IF _shift IS NULL THEN
+          RAISE EXCEPTION 'shift_dates_equalities_function exception. Timestamp not valid for the shift'
+          USING HINT = 'Please check your shift dates and the table start_at or end_at timestamps';
+        END IF;
+      RETURN NEW;
+    END
+$$ LANGUAGE 'plpgsql';
+
+
 /*
 * Controllo se un dipendente inserito come manutentore con un particolare shift_id non si ripeta nella tabella other_table
 * other_table è un parametro, in modo da generalizzare la function a qualsiasi tabella passata in parametro.
@@ -125,6 +274,7 @@ CREATE TRIGGER dispatcher_shift_equalities_assistance_trigger
   BEFORE INSERT OR UPDATE
   ON attendee
   FOR EACH ROW EXECUTE PROCEDURE dispatcher_shift_equalities_function();-- Un manutentore non può fare altre assistenze fino a quando non ha terminato quella presente
+
 CREATE OR REPLACE FUNCTION maintainer_is_already_occupied_assistance()
   RETURNS trigger AS $$
     DECLARE
@@ -172,7 +322,6 @@ CREATE TRIGGER shift_dates_equalities_borrow_trigger
   BEFORE INSERT OR UPDATE
   ON borrow
   FOR EACH ROW EXECUTE PROCEDURE shift_dates_equalities_function();
-
 -- Un manutentore non può prendere in prestito un oggetto non ancora restituito.
 
 CREATE OR REPLACE FUNCTION maintainer_borrow_not_available_object()
