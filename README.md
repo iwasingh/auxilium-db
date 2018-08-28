@@ -11,8 +11,8 @@ Dopo la competizione si è scelto di estenderlo per proporlo come progetto d'esa
     ├── dias                            # Tutti i file .dia
     ├── pngs                            # Tutti i file .pngs
     └── sqls                            # Tutti i file .sql
-        ├── auxilium.sql                # File contenente il sql di creazione e inserimento e triggers(generato dal comando make sql)
-        ├── export.sql                  # File di esportazione ottenuto da postgresql
+        ├── auxilium.sql                # File contenente il sql di creazione, inserimento e triggers(generato dal comando make sql)
+        ├── export.sql                  # File di esportazione ottenuto da pgAdmin
         ├── create                      # Query creazione
         ├── insert                      # Query inserimento
         ├── delete                      # Query eliminazione
@@ -22,15 +22,18 @@ Dopo la competizione si è scelto di estenderlo per proporlo come progetto d'esa
 ```
 ## Import Database
 Sono presenti 2 file nella directory ```sqls```. È possibile sfruttare questi 2 file per creare il database con i dati, tabelle e triggers.
-* auxilium.sql - file generato tramite script Makefile. Copiare il contenuto e incollarlo su Query tool ed eseguire il tutto.
-* export.sql - file generato dal pgAdmin. Al click destro su un database usare l'opzione ```Restore```, quindi selezionare il file ```export.sql```  per importare tutti i dati
+* ***auxilium.sql*** - file generato tramite Makefile. Copiare il contenuto e incollarlo su Query tool ed eseguire il tutto.
+* ***export.sql*** - file generato dal pgAdmin. Al click destro su un database usare l'opzione ```Restore```, quindi selezionare il file ```export.sql```  per importare tutti i dati.
+In alternativa è possibile usare il comando ```pg_dump```
 
 Nel caso si fossero problemi con un file è possibile provare con l'altro. Ricordare ovviamente di create il database prima di operare con uno dei 2 file:
-```CREATE DATABASE auxilium```
+```
+CREATE DATABASE auxilium
+```
 
 ## Generazione sql
-Di fronte all'esigenza di gestire il codice sql e al suo utilizzo, si è creato uno script che generasse un file unico prendendo le varie query in ordine dai file sotto ogni cartella 
-Quindi a seguito di una modifica basta lanciare un comando per avere il sql aggiornanto e pronto all'uso.
+Di fronte all'esigenza di gestire il codice sql e al suo utilizzo, si è creato uno script che generasse un file unico prendendo le varie query in ordine dai file sotto ogni cartella.
+Quindi, a seguito di una modifica basta lanciare un comando per avere il sql aggiornanto e pronto all'uso.
 È possibile generare direttamente il sql tramite i seguenti comandi make dalla directory ```Project```(testato solo su Debian 9). In alternativa
 è comunque possibile ottenere il codice sql da ogni singolo file presente nelle sottodirectory sotto ```sqls``` oppure semplicemente copiando
 e incollando il contenuto del file ```auxilium.sql```
