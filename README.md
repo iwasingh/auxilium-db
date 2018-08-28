@@ -1,5 +1,4 @@
 # Auxilium
-## Some facts
 Questo progetto nasce a seguito dell'[Hackathon 2016 Var Group](https://www.vargroup.it/hackathon/).
 Dopo la competizione si è scelto di estenderlo per proporlo come progetto d'esame per Basi di Dati.
 
