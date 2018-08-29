@@ -4,4 +4,3 @@ SELECT * FROM town WHERE cap IN (
 ) OR cap NOT IN ( 
 	SELECT DISTINCT town_cap FROM office, town WHERE town.cap = office.town_cap
 );
-

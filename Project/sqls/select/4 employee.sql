@@ -10,9 +10,3 @@ UNION
   EXCEPT
   SELECT employee_cf FROM shift, dispatcher WHERE shift.id = dispatcher.shift_id
 );
-
--- Selezionare l'ufficio col maggior numero di dipendenti
-
-SELECT office_id 
-	FROM employee 
-	GROUP BY office_id HAVING COUNT(*) >= ALL (SELECT COUNT(*) FROM employee GROUP BY office_id)
